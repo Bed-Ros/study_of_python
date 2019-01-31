@@ -19,13 +19,15 @@ from functools import reduce
 # Решите задачу двумя способами: с помощью map и lambda 
 # и с помощью генератора списка. 
 def diff():
-    # +++ ваш код +++
-    return
+    # map и lambda
+    # return ((sum(range(101)))**2 - sum(map(lambda x: x**2, range(101))))
+    # генератор списка
+    return ((sum(range(101)))**2 - sum(n**2 for n in range(101)))
 
 
 # B. Найдите наибольшее произведение пяти последовательных цифр в 
 # 1000-значном числе.
-"""
+big_number = """
 73167176531330624919225119674426574742355349194934
 96983520312774506326239578318016984801869478851843
 85861560789112949495459501737958331952853208805511
@@ -48,24 +50,33 @@ def diff():
 71636269561882670428252483600823257530420752963450"""
 
 def max_five():
-    # +++ ваш код +++
-    return
+    products = []
+    res = 1
+    for index in range(len(big_number)):
+        for n in big_number[index:index + 5]:
+            if n != '\n':
+                res *= int(n)
+        products.append(res)
+        res = 1
+    products.sort()
+    return products[-1]
 
 
 # C. Какова сумма цифр числа 2**1000
 # 2**15 = 32768, сумма цифр 3 + 2 + 7 + 6 + 8 = 26.
 # Какова сумма цифр числа 2**1000?
 def summm():
-    # +++ ваш код +++
-    return
+    return sum(int(n) for n in str(2**1000))
 
 
 # D. Найдите сумму цифр в числе 100!
 # n! означает n * (n-1) * ... * 3 * 2 * 1
 # Найдите сумму цифр в числе 100!.
 def factorial():
-    # +++ ваш код +++
-    return
+    fac = 1
+    for n in range(1, 101):
+        fac *= n
+    return sum(int(n) for n in str(fac))
 
 
 # Простая функция test() используется в main() для вывода
