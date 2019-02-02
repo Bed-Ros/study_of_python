@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-
 # Строки
 
 # Заполните код преведенных ниже функций. Функция main() уже настроена
@@ -19,8 +17,7 @@
 # Таким образом, donuts(5) вернет 'Количество пончиков: 5'
 # а donuts(23) - 'Количество пончиков: много'
 def donuts(count):
-    # +++ ваш код +++
-    return
+    return "Количество пончиков: " + ("много" if count >= 10 else str(count))
 
 
 # B. Оба конца
@@ -31,8 +28,7 @@ def donuts(count):
 # Однако, если длина строки меньше, чем 2 -
 # верните просто пустую строчку.
 def both_ends(s):
-    # +++ ваш код +++
-    return
+    return "" if len(s) < 2 else s[:2] + s[-2:]
 
 
 # C. Кроме первого
@@ -44,8 +40,7 @@ def both_ends(s):
 # Подсказка: s.replace(stra, strb) вернет версию строки, 
 # в которой все вхождения stra будут заменены на strb.
 def fix_start(s):
-    # +++ ваш код +++
-    return
+    return s[0] + s[1:].replace(s[0], '*')
 
 
 # D. Перемешивание
@@ -56,9 +51,9 @@ def fix_start(s):
 #   'mix', 'pod' -> 'pox mid'
 #   'dog', 'dinner' -> 'dig donner'
 # Предполагается, что строки a и b имеют длину 2 и более символов.
-def mix_up(a, b):    
-    # +++ ваш код +++
-    return
+def mix_up(a, b):
+    a, b = b[0:2] + a[2:], a[0:2] + b[2:]
+    return a + " " + b
 
 
 # E. Хорош
@@ -70,8 +65,9 @@ def mix_up(a, b):
 # Т.о., 'Этот ужин не так уж плох!' вернет:
 # Этот ужин хорош!
 def not_bad(s):
-    # +++ ваш код +++    
-    return
+    if s.find("не") < s.find("плох"):
+        s = s[:s.find("не")] + "хорош" + s[s.find("плох")+4:]
+    return s
 
 
 # F. Две половины
@@ -82,9 +78,9 @@ def not_bad(s):
 # Даны 2 строки, a и b, верните строку вида:
 # 1-половина-a + 1-половина-b + 2-половина-a + 2-половина-b
 def front_back(a, b):
-    # +++ ваш код +++
-    return
-
+    middle_a = int((len(a)) / 2) if len(a) % 2 == 0 else int((len(a)) / 2 + 1)
+    middle_b = int((len(b)) / 2) if len(b) % 2 == 0 else int((len(b)) / 2 + 1)
+    return a[:middle_a] + b[:middle_b] + a[middle_a:] + b[middle_b:]
 
 
 # Простая функция test() используется в main() для вывода
