@@ -72,13 +72,13 @@ def print_words(filename):
     word_dict = get_words_dict(filename)
 
     for k in sorted(word_dict.keys()):
-        print '{0:20} {1:5}'.format(k, word_dict[k])
+        print('{0:20} {1:5}'.format(k, word_dict[k]))
 
 def print_top(filename):
     word_dict = get_words_dict(filename)
 
     for k, v in sorted(word_dict.items(), key=lambda x: x[1], reverse=True)[:20]:
-        print '{0:20} {1:5}'.format(k, v)
+        print('{0:20} {1:5}'.format(k, v))
 
 def main():
     if len(sys.argv) != 3:

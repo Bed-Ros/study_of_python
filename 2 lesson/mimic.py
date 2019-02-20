@@ -40,7 +40,7 @@ import codecs
 def mimic_dict(filename):
     """Возвращает имитационный словарь, сопоставляющий каждое слово 
     со списом слов, которые непосредственно следуют за ним в тексте"""
-    
+
     f = codecs.open(filename, encoding='utf-8')
     word_list = f.read().split()
 
@@ -59,16 +59,16 @@ def mimic_dict(filename):
 def print_mimic(mimic_dict, word):
     """Принимает в качестве аргументов имитационный словарь и начальное слово,
     выводит 200 случайных слов."""
-    
+
     res = []
 
-    for i in xrange(200):
+    for i in range(200):
         if not word in mimic_dict:
             word = ''
         word = random.choice(mimic_dict[word])
         res.append(word)
 
-    print ' '.join(res)
+    print(' '.join(res))
 
 
 def main():
