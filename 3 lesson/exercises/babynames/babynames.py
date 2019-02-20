@@ -161,7 +161,13 @@ def extract_names(filename):
     </td> </tr>
 
     """
+    f = codecs.open(filename, encoding='utf-8')
+    text = f.read()
+    result_of_searching = re.findall('<tr> (<td.*\s*(.*)\s*.*</td>) </tr>', text)
+    # names_info = {}
+    # for n in result_of_searching:
 
+    print(result_of_searching)
     return
 
 
