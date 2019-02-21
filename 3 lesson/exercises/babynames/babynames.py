@@ -129,6 +129,21 @@ babynames = {
 import os
 import sys
 
+
+def number_of_colums(res):
+    index_first_name = -1
+    index_second_name = -1
+    for counter1 in range(len(res)):
+        if res[counter1][0].isalpha():
+            index_first_name = counter1
+            break
+    for counter2 in range(index_first_name+1, len(res)):
+        if res[counter2][0].isalpha():
+            index_second_name = counter2
+            break
+    return index_second_name - index_first_name
+
+
 def extract_names(filename):
     """
     Получает имя файла. 
@@ -163,16 +178,16 @@ def extract_names(filename):
     """
     f = codecs.open(filename, encoding='utf-8')
     text = f.read()
-    result_of_searching = re.findall('<tr> (<td.*\s*(.*)\s*.*</td>) </tr>', text)
-    # names_info = {}
-    # for n in result_of_searching:
-
-    print(result_of_searching)
-    return
+    result = re.findall('<td.*\s*(.*)\s*.*</td>', text)
+    columns = number_of_colums(result)
+    names_info = {}
+    for n in range(0, len(result), columns):
+        names_info[result[n+1]] = result[n+2:n+columns]
+    return names_info
 
 
 def print_names(babynames):
-    # +++ваш код+++
+
     return
 
 def main():
