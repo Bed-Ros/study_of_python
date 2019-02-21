@@ -102,7 +102,7 @@ print(emails)
 # замена
 # Строка замены может включать '\1', '\2'. которые ссылаются на текст 
 # из group(1), group(2) и так далее из исходного текста.
-new_s = re.sub(r'([\w.-]+)@([\w.-]+)', r'\1@supermail.com', s)
+news = re.sub(r'([\w.-]+)@([\w.-]+)', r'\1@supermail.com', s)
 print(news)
 
 
