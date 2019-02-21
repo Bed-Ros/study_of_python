@@ -186,9 +186,27 @@ def extract_names(filename):
     return names_info
 
 
-def print_names(babynames):
+def extract_years(filename):
+    f = codecs.open(filename, encoding='utf-8')
+    text = f.read()
+    years = re.findall('<th.*\s*.*(\d{4})\s*год.*\s.*</th>', text)
+    return years
 
-    return
+
+def print_names(babynames, years):
+    index_year = -1
+    while index_year == -1:
+        print("Выберете год из списка:")
+        for i in years:
+            print(i)
+        year = input()
+        if year in years:
+            index_year = list.index(years, year)
+        else:
+            print("Неверно выбран год!")
+    for n in sorted(babynames.keys()):
+        print(n + "  " + babynames[n][index_year])
+
 
 def main():
     # Код разбора командной строки
@@ -202,7 +220,8 @@ def main():
 
     filename = args[0]
     babynames = extract_names(filename)
-    print_names(babynames)
+    years = extract_years(filename)
+    print_names(babynames, years)
 
   
 if __name__ == '__main__':
