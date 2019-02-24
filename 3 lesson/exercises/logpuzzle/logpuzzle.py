@@ -3,6 +3,7 @@
 import os
 import re
 import sys
+import codecs
 import urllib.request
 
 """ Logpuzzle
@@ -45,7 +46,15 @@ def read_urls(filename):
     извлекая имя хоста из имени файла (apple-cat.ru_access.log). Вычищает
     дубликаты и возвращает список url, отсортированный по названию изображения.
     """
-    return []
+    site_url = re.findall('(.*)_access\\.log', filename)
+    site_url = 'http://' + site_url[0]
+    f = codecs.open(filename, encoding='utf-8')
+    text = f.read()
+    dir_imgs = re.findall('.* (.*animals.*jpg).*\n', text)
+    for i in range(len(dir_imgs)):
+        dir_imgs[i] = site_url + dir_imgs[i]
+    dir_imgs = list(set(dir_imgs))
+    return sorted(dir_imgs)
   
 
 def download_images(img_urls, dest_dir):
@@ -55,8 +64,15 @@ def download_images(img_urls, dest_dir):
     Создает файл index.html в заданной директории с тегами img, чтобы 
     отобразить картинку в сборе. Создает директорию, если это необходимо.
     """
-    # +++ваш код+++
-  
+    f = open(dest_dir + '/index.html', 'tw', encoding='utf-8')
+    lines = ['<html>\n', '<body>\n']
+    for i in range(len(img_urls)):
+        file_name = dest_dir + '/img' + str(i) + '.jpg'
+        urllib.request.urlretrieve(img_urls[i], file_name)
+        lines.append('<img src="img' + str(i) + '.jpg">')
+    lines.extend(['\n', '<body>\n', '<html>\n'])
+    f.writelines(lines)
+
 
 def main():
     args = sys.argv[1:]
@@ -75,7 +91,8 @@ def main():
     if todir:
         download_images(img_urls, todir)
     else:
-        print('\n'.join(img_urls))
+        for n in img_urls:
+            print('\n'.join(n))
 
 if __name__ == '__main__':
     main()
