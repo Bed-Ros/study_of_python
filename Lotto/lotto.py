@@ -2,7 +2,7 @@ import random
 import sys
 
 
-def create_lotto():
+def create_lotto_list():
     list = [[], [], []]
     numbers = [i for i in range(1, 90)]
     for line in range(3):
@@ -16,16 +16,15 @@ def create_lotto():
 
 def print_lists(comp_list, user_list):
     print("---Компьютер---")
-    for nomer in comp_list:
-        print(nomer)
+    for line in comp_list:
+        print(line)
     print("-----Игрок-----")
-    for nomer in user_list:
-        print(nomer)
+    for line in user_list:
+        print(line)
 
 
 def user_interface(comp_list, user_list, barrel):
     print_lists(comp_list, user_list)
-    win = True
     print('Бочонок № ' + str(barrel))
     print('Зачеркнуть цифру? (y/n)')
     answer = input()
@@ -39,7 +38,7 @@ def user_interface(comp_list, user_list, barrel):
                 number_lines_with_barrel += 1
         if number_lines_with_barrel == 0:
             print("Вы проиграли")
-            win = False
+            sys.exit(0)
         else:
             for line in user_list:
                 if barrel in line:
@@ -48,15 +47,13 @@ def user_interface(comp_list, user_list, barrel):
         for line in user_list:
             if barrel in line:
                 print("Вы проиграли")
-                win = False
-                break
-    return win
+                sys.exit(0)
 
 
 def comp_brain(comp_list, barrel):
-    for n in comp_list:
-        if barrel in n:
-            n[n.index(barrel)] = -1
+    for line in comp_list:
+        if barrel in line:
+            line[line.index(barrel)] = -1
 
 
 def win_chek(comp_list, user_list):
@@ -77,16 +74,17 @@ def win_chek(comp_list, user_list):
 
 
 def main():
-    complist, userlist = create_lotto(), create_lotto()
+    complist = create_lotto_list()
+    userlist = create_lotto_list()
     bag = [i for i in range(1, 90)]
-    user_didnt_lose = True
-    while user_didnt_lose:
+    while bag:
         barrel = random.choice(bag)
         bag.remove(barrel)
         user_interface(complist, userlist, barrel)
         comp_brain(complist, barrel)
         win_chek(complist, userlist)
-
+    print('Бочонки закончились')
+    print('Сообщи разрабу, это ошибка')
 
 if __name__ == '__main__':
     main()
