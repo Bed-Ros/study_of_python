@@ -12,24 +12,26 @@ def create_files_list(direction):
 
 def check_file_twins(dirs_list):
     twins_list = []
-    for ffd in dirs_list:
+    for ffd in range(len(dirs_list)):
         try:
-            first_file = open(ffd).read()
-            for sfd in dirs_list:
-                if ffd != sfd and os.path.getsize(ffd) == os.path.getsize(sfd):
-                    try:
-                        second_file = open(sfd).read()
-                        if first_file == second_file:
-                            twins_list.append([ffd, sfd])
-                    except:
-                        print('Не смог обработать файл ' + sfd)
+            first_file = open(dirs_list[ffd], 'rb').read()
         except:
-            print('Не смог обработать файл ' + ffd)
+            print('Не смог обработать файл ' + dirs_list[ffd])
+        else:
+            for sfd in range(ffd + 1, len(dirs_list)):
+                if dirs_list[ffd] != dirs_list[sfd]:
+                    try:
+                        second_file = open(dirs_list[sfd], 'rb').read()
+                    except:
+                        print('Не смог обработать файл ' + dirs_list[sfd])
+                    else:
+                        if first_file == second_file:
+                            twins_list.append([dirs_list[ffd], dirs_list[sfd]])
     return twins_list
 
 
 def main():
-    initial_dir = 'C:/'
+    initial_dir = r'C:/'
     print('Создается список всех файлов папки ' + initial_dir)
     files_list = create_files_list(initial_dir)
     print('Идет поиск близнецов')
