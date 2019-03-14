@@ -16,21 +16,21 @@ def random_salary():
 
 def create_random_vacancies():
     titles = ["Продавец", "Программист", "Учитель", "Врач", "Банкир"]
-    currencies = ["RUB", "EUR", "USD"]
+    currencies = ["RUR", "EUR", "USD"]
     vacancies = []
     for vacancy in range(1000):
         vcnc = {}
-        vcnc["title"] = random.choice(titles)
-        vcnc["salary"] = random_salary()
-        vcnc["currency"] = random.choice(currencies)
+        vcnc["Title"] = random.choice(titles)
+        vcnc["Salary"] = random_salary()
+        vcnc["Currency"] = random.choice(currencies)
         vacancies.append(vcnc)
     f = open("vacancies_info.txt", 'w')
     json.dump(vacancies, f, ensure_ascii=False, indent=4)
 
 
 def average_salary(vacancy):
-    min_salary = vacancy["salary"]["minValue"]
-    max_salary = vacancy["salary"]["maxValue"]
+    min_salary = vacancy["Salary"]["minValue"]
+    max_salary = vacancy["Salary"]["maxValue"]
     if min_salary and max_salary:
         return(int(min_salary) + int(max_salary)) // 2
     elif min_salary and not max_salary:
@@ -42,11 +42,11 @@ def average_salary(vacancy):
 def sort_vacancies_by_title(vacancies_info, currency):
     result = {}
     for vacancy in vacancies_info:
-        if vacancy["currency"] == currency:
-            if vacancy["title"] in result.keys():
-                result[vacancy["title"]].append(vacancy)
+        if vacancy["Currency"] == currency:
+            if vacancy["Title"] in result.keys():
+                result[vacancy["Title"]].append(vacancy)
             else:
-                result[vacancy["title"]] = [vacancy]
+                result[vacancy["Title"]] = [vacancy]
     return result
 
 
@@ -66,7 +66,7 @@ def main():
     create_random_vacancies()
     input_file = open("vacancies_info.txt", 'r')
     vacancies_info = json.load(input_file)
-    result = average_salarys_vacancies(vacancies_info, "RUB")
+    result = average_salarys_vacancies(vacancies_info, "RUR")
     output_file = open("average_salary.txt", 'w')
     json.dump(result, output_file, ensure_ascii=False, indent=4)
 
